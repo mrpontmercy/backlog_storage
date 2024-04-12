@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load card_tag %}
+
+{% block maincontent %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% if records %}
+      {% for record in records %}
+        {% if user.pk == record.author_id %}
+          {% get_record_for_card record %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+    {% endif %}
+  </div>
+  <p class="h1 mt-5">У вас пока нет ни одной записи =( </p>
+{% endblock %}

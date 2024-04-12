@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Регистрация
+{% endblock title %}
+
+{% block maincontent %}
+    <form action="" method="POST">
+        <input type="hidden" value={{ next }}>
+        {% csrf_token %}
+        <input type="hidden" name="next" value={{ next }}>
+        {{ form.as_p }}
+        <p><button type="submit">Зарегистрироваться</button></p>
+    </form>
+{% endblock %}

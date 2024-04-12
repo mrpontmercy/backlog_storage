@@ -1,0 +1,13 @@
+{% extends "base.html" %} 
+
+
+{% block maincontent %}
+<div class="container w-50 center">
+  {% block link_to_creator_route %}{% endblock link_to_creator_route %}
+  <ul class="list-group">
+    {% block for_objects %}
+    
+    {% endblock for_objects %}
+  </ul>
+</div>
+{% endblock %}

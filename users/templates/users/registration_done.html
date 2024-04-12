@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Регистрация прошла успешно
+{% endblock title %}
+
+{% block maincontent %}
+    <h1>Вы успешно зарегестрировали. Чтобы войти в свой профиль перейдите по этой <a href="{% url "users:login" %}">ссылке</a></h1>
+{% endblock %}
+

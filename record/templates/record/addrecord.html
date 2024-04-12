@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block maincontent %}
+  <form action="" method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-warning"> {{ form.non_field_errors }} </div>
+    {% endif %} 
+    {% for f in form %}
+      <div class="form-group row w-50">
+        <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+        {{ f }}
+        {% for error in f.errors %}
+          <div class="alert alert-warning"> {{ error }} </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary mt-4">Отправить</button>
+  </form>
+{% endblock %}

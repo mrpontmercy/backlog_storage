@@ -1,0 +1,22 @@
+{% extends "record/list_objects.html" %} 
+
+{% block link_to_creator_route %}
+  <a href="{% url "add_category" %}" class="btn btn-primary mb-4">Добавить категорию</a>
+{% endblock link_to_creator_route %}
+
+{% block for_objects %}
+  {% for cat in categories %}
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class="col-4">{{cat.name}}</div>
+      <div class="col-4">
+        <a href="{% url "delete_category" cat.id %}" class="btn btn-primary">Удалить</a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+
+
+
+{% endblock for_objects %}
+

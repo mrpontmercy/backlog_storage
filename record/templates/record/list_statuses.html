@@ -1,0 +1,20 @@
+{% extends "record/list_objects.html" %} 
+
+
+{% block link_to_creator_route %}
+  <a href="{% url "add_status" %}" class="btn btn-primary mb-4">Добавить новый статус</a>
+{% endblock link_to_creator_route %}
+
+{% block for_objects %}
+  {% for s in statuses %}
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class="col-4">{{s.name}}</div>
+      <div class="col-4">
+        <a href="{% url "delete_status" s.id %}" class="btn btn-primary">Удалить</a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+{% endblock for_objects %}
+
