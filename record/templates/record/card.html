@@ -14,11 +14,16 @@
     </div>
     <div class="container text-center w-40">
       <div class="row justify-content-between">
+        {% if record.link_to_resource %}
+          <div class="col">
+            <a href="{{ record.link_to_resource }}" class="btn btn-primary mb-3">Ссылка</a>
+          </div>
+        {% endif %}
         <div class="col">
-          <a href="{{ record.link_to_resource }}" class="btn btn-primary mb-3">Link to resource</a>
+          <a href="{% url "edit_record" record.id %}" class="btn btn-primary mb-3">Изменить</a>
         </div>
         <div class="col">
-          <a href="" class="btn btn-primary mb-3">Удалить</a>
+          <a href="{% url "delete_record" record.id %}" class="btn btn-primary mb-3">Удалить</a>
         </div>
       </div>
     </div>

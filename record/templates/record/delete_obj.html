@@ -3,9 +3,9 @@
 
 {% block maincontent %}
 <div class="container w-50 center">
-  <p class="h3">Вы действительно хотите удалить {{ obj_string }} "{{obj.name }}"?</p>
+  <p class="h3">Вы действительно хотите удалить {{ obj_string }} "{% if obj.name %}{{obj.name}}{% else %}{{obj.title}}{% endif %}"?</p>
 
-  <form action="{% url "delete_category" obj.id %}" method="POST">
+  <form action="{{ delete_view }}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}">
     <button type="submit" class="btn btn-primary">Удалить</button>

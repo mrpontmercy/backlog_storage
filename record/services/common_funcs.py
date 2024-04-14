@@ -3,15 +3,13 @@ from django import forms
 from django.contrib import messages
 from django.db import IntegrityError, models
 from django.http import HttpRequest
-from django.shortcuts import redirect
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
 from record.forms import NameForm
-from record.models import Status
 
 
-def add_common_row_to_db(request: HttpRequest, model_instance: models.Model):
+def add_row_with_slug_to_db(request: HttpRequest, model_instance: models.Model):
     if request.method == "POST":
         form = get_form(NameForm, model_instance, request.POST)
 
@@ -35,3 +33,6 @@ def add_common_row_to_db(request: HttpRequest, model_instance: models.Model):
 
 def get_form(obj: Type[forms.ModelForm], instance, data=None):
     return obj(data=data, instance=instance)
+
+
+def delete_obj_with_sluh(obj_string): ...
