@@ -7,7 +7,7 @@ from unidecode import unidecode
 
 # Create your models here.
 class CommonInfoABC(models.Model):
-    name = models.CharField(max_length=100, unique=True, db_index=True)
+    name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
 
     def __str__(self) -> str:

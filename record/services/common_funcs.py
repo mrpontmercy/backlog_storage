@@ -6,17 +6,22 @@ from django.http import HttpRequest
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
-from record.forms import NameForm
 
-
-def add_row_with_slug_to_db(request: HttpRequest, model_instance: models.Model):
+def get_name_form_or_get_form_and_add_row_into_db(
+    request: HttpRequest,
+    model: type[models.Model],
+    item_name_label: str,
+    item_name_error: str,
+):
     if request.method == "POST":
-        form = get_form(NameForm, model_instance, request.POST)
+        name_form = get_modelfrom_from_factory(model, item_name_label, item_name_error)
+        name_form_instance = name_form(data=request.POST)
 
-        if form.is_valid():
-            row = form.save(commit=False)
+        if name_form_instance.is_valid():
+            row = name_form_instance.save(commit=False)
             row.author = request.user
             row.slug = slugify(unidecode(row.name) + "_" + row.author.username)
+            print(f"{slugify(unidecode(row.name) + '_' + row.author.username)=}")
             try:
                 row.save()
             except IntegrityError:
@@ -26,13 +31,31 @@ def add_row_with_slug_to_db(request: HttpRequest, model_instance: models.Model):
 
             return None, True
     else:
-        form = get_form(NameForm, instance=model_instance)
+        form = get_modelfrom_from_factory(model, item_name_label, item_name_error)
+        name_form_instance = form()
 
-    return form, False
-
-
-def get_form(obj: Type[forms.ModelForm], instance, data=None):
-    return obj(data=data, instance=instance)
+    return name_form_instance, False
 
 
-def delete_obj_with_sluh(obj_string): ...
+def get_modelfrom_from_factory(
+    model, item_name_label: str | None = None, item_name_error: str | None = None
+):
+    return forms.modelform_factory(
+        model=model,
+        fields=["name"],
+        widgets={
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+        },
+        labels={
+            "name": f"Название {item_name_label}",
+        },
+        error_messages={
+            "name": {
+                "unique": f"{item_name_error.capitalize()} с таким названием уже существует!",
+            }
+        },
+    )

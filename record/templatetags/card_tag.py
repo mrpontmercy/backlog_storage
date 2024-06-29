@@ -16,5 +16,4 @@ def get_record_for_card(record):
     "record/delete_category.html", takes_context=True, name="modal_window"
 )
 def modal_window_delete(context, cat):
-    print(cat)
     return {"c": cat}

@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from record.services.common_funcs import add_row_with_slug_to_db
+from record.services.common_funcs import get_name_form_or_get_form_and_add_row_into_db
 
 from .forms import RecordForm
 
@@ -32,9 +32,11 @@ def index(request: HttpRequest):
 
 @login_required(login_url="users:login")
 def add_category(request: HttpRequest):
-    form, ok = add_row_with_slug_to_db(
+    form, ok = get_name_form_or_get_form_and_add_row_into_db(
         request,
-        Category(),
+        Category,
+        item_name_label="категории",
+        item_name_error="Категория",
     )
     if ok:
         return redirect("list_categories")
@@ -68,7 +70,6 @@ def add_record(request: HttpRequest):
 def delete_record(request: HttpRequest, record_id: int):
     obj_string = "запись"
     obj = get_object_or_404(Record, id=record_id, author=request.user)
-    print(obj.title)
     context = {
         "title": "Удалить",
         "obj": obj,
@@ -141,9 +142,11 @@ def list_statuses(request: HttpRequest):
 
 @login_required(login_url="users:login")
 def add_status(request: HttpRequest):
-    form, ok = add_row_with_slug_to_db(
+    form, ok = get_name_form_or_get_form_and_add_row_into_db(
         request,
-        Status(),
+        Status,
+        item_name_label="статуса",
+        item_name_error="Статус",
     )
     if ok:
         return redirect("list_statuses")
@@ -177,7 +180,6 @@ def delete_status(request: HttpRequest, status_id: int):
 def list_tags(request: HttpRequest):
     tags = Tag.objects.filter(author=request.user)
 
-    print(tags)
     context = {
         "title": "Тэги",
         "tags": tags,
@@ -188,9 +190,11 @@ def list_tags(request: HttpRequest):
 
 @login_required(login_url="users:login")
 def add_tag(request: HttpRequest):
-    form, ok = add_row_with_slug_to_db(
+    form, ok = get_name_form_or_get_form_and_add_row_into_db(
         request,
-        Tag(),
+        Tag,
+        item_name_label="тэга",
+        item_name_error="Тэг",
     )
     if ok:
         return redirect("list_tags")

@@ -14,7 +14,6 @@ def login_user(request: HttpRequest):
 
         if form.is_valid():
             data = form.cleaned_data
-            print(data)
             user = authenticate(
                 request,
                 username=data["username"],

@@ -32,24 +32,3 @@ class RecordForm(forms.ModelForm):
             "status": "Статус",
             "tags": "Тэги",
         }
-
-
-class NameForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ["name"]
-        widgets = {
-            "name": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                }
-            ),
-        }
-        labels = {
-            "name": "Название категории",
-        }
-        error_messages = {
-            "name": {
-                "unique": "Категория с таким названием уже существует!",
-            }
-        }

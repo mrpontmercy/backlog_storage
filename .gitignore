@@ -9,10 +9,12 @@ __pycache__/
 #env
 .env/
 env/
-requirements.txt
 
 #vscode
 .vscode/
+
+#mypy
+.mypy_cache/
 
 # Distribution / packaging
 .Python
