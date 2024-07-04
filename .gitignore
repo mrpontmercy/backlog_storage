@@ -17,6 +17,9 @@ env/
 #mypy
 .mypy_cache/
 
+#flake8
+.flake8
+
 # Distribution / packaging
 .Python
 build/

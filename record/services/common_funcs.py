@@ -1,4 +1,3 @@
-from typing import Type
 from django import forms
 from django.contrib import messages
 from django.db import IntegrityError, models

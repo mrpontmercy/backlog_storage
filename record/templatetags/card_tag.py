@@ -1,8 +1,5 @@
 from django import template
-from django.db.models import Model
-from django.db.models.base import ModelBase
 
-from record.models import Category
 
 register = template.Library()
 
