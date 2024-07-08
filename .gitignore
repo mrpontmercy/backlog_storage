@@ -13,6 +13,7 @@ env/
 
 #vscode
 .vscode/
+data.json
 
 #mypy
 .mypy_cache/
