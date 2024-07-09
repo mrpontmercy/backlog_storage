@@ -18,8 +18,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-import record.views
-
 urlpatterns = [
     path("users/", include("users.urls")),
     path("", include("record.urls")),

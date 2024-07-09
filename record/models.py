@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.template.defaultfilters import slugify
+from unidecode import unidecode
 
 
 # Create your models here.
@@ -55,6 +57,10 @@ class Category(CommonInfoABC):
         related_name="categories",
     )
 
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(unidecode(self.name) + "_" + self.author.username)
+        super().save(*args, **kwargs)
+
 
 class Tag(CommonInfoABC):
     author = models.ForeignKey(
@@ -63,6 +69,10 @@ class Tag(CommonInfoABC):
         related_name="tags",
     )
 
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(unidecode(self.name) + "_" + self.author.username)
+        super().save(*args, **kwargs)
+
 
 class Status(CommonInfoABC):
     author = models.ForeignKey(
@@ -70,3 +80,7 @@ class Status(CommonInfoABC):
         on_delete=models.CASCADE,
         related_name="statuses",
     )
+
+    def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(unidecode(self.name) + "_" + self.author.username)
+        super().save(*args, **kwargs)

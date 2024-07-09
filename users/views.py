@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 
-from .forms import RegistrationForm
+from users.forms import RegistrationForm
 
 
 def login_user(request: HttpRequest):

@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib import messages
-from django.db import IntegrityError, models
+from django.db import IntegrityError, models, transaction
 from django.http import HttpRequest
-from django.template.defaultfilters import slugify
-from unidecode import unidecode
 
 
 def get_name_form_or_get_form_and_add_row_into_db(
@@ -19,14 +17,13 @@ def get_name_form_or_get_form_and_add_row_into_db(
         if name_form_instance.is_valid():
             row = name_form_instance.save(commit=False)
             row.author = request.user
-            row.slug = slugify(unidecode(row.name) + "_" + row.author.username)
-            print(f"{slugify(unidecode(row.name) + '_' + row.author.username)=}")
             try:
                 row.save()
             except IntegrityError:
                 messages.add_message(
                     request, messages.INFO, "Не удалось сохранить данную категорию"
                 )
+                transaction.rollback()
 
             return None, True
     else:
@@ -54,7 +51,7 @@ def get_modelfrom_from_factory(
         },
         error_messages={
             "name": {
-                "unique": f"{item_name_error.capitalize()} с таким названием уже существует!",
+                "unique": f"{item_name_error} с таким названием уже существует!",
             }
         },
     )
